@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
+import eslintPluginImportX from "eslint-plugin-import-x";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
 import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
@@ -19,6 +20,9 @@ export default defineConfig([
       eslintPluginUnicorn.configs.recommended,
       eslintConfigPrettier // must be last
     ],
+    plugins: {
+      import: eslintPluginImportX
+    },
     languageOptions: {
       globals: globals.browser
     },
@@ -35,7 +39,15 @@ export default defineConfig([
             utils: true
           }
         }
-      ]
+      ],
+      "import/no-unresolved": "off", // cannot resolve Vite aliases/virtual modules, and TypeScript already errors on unresolved imports, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unresolved.md#when-not-to-use-it
+      "import/no-default-export": "error" // disable default exporting
+    }
+  },
+  {
+    files: ["**/*.config.ts"],
+    rules: {
+      "import/no-default-export": "off" // vite and friends require a default-exported config
     }
   }
 ]);
