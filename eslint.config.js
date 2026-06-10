@@ -9,7 +9,7 @@ import globals from "globals";
 import ts from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "src/routeTree.gen.ts"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
@@ -48,6 +48,12 @@ export default defineConfig([
     files: ["**/*.config.ts"],
     rules: {
       "import/no-default-export": "off" // vite and friends require a default-exported config
+    }
+  },
+  {
+    files: ["src/routes/**/*.tsx"],
+    rules: {
+      "react-refresh/only-export-components": ["error", { extraHOCs: ["createFileRoute", "createRootRoute"] }] // TanStack route files must export their Route registration, whose HMR is handled by the router plugin
     }
   }
 ]);
