@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { ThemeSwitcher } from "@/components/theme-switcher";
+
 export const Route = createFileRoute("/")({
   component: RouteComponent
 });
@@ -54,6 +56,9 @@ function RouteComponent() {
   return (
     <div className="flex min-h-svh flex-col">
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">
+        <div className="flex justify-end">
+          <ThemeSwitcher />
+        </div>
         <section>
           <h1 className="font-mono text-4xl font-bold tracking-tight">algo·arcade</h1>
           <p className="mt-3 max-w-xl text-neutral-600">An arcade of interactive algorithm visualisations.</p>
