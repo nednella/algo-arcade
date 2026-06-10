@@ -27,6 +27,7 @@ export default defineConfig([
       globals: globals.browser
     },
     rules: {
+      // allow idiomatic React/TS names, see: https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prevent-abbreviations.md
       "unicorn/prevent-abbreviations": [
         "error",
         {
@@ -40,8 +41,10 @@ export default defineConfig([
           }
         }
       ],
-      "import/no-unresolved": "off", // cannot resolve Vite aliases/virtual modules, and TypeScript already errors on unresolved imports, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unresolved.md#when-not-to-use-it
-      "import/no-default-export": "error" // disable default exporting
+      // cannot resolve Vite aliases/virtual modules, and TypeScript already errors on unresolved imports, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unresolved.md#when-not-to-use-it
+      "import/no-unresolved": "off",
+      // disable default exporting, see: https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-default-export.md
+      "import/no-default-export": "error"
     }
   },
   {
@@ -53,7 +56,8 @@ export default defineConfig([
   {
     files: ["src/routes/**/*.tsx"],
     rules: {
-      "react-refresh/only-export-components": ["error", { extraHOCs: ["createFileRoute", "createRootRoute"] }] // TanStack route files must export their Route registration, whose HMR is handled by the router plugin
+      // TanStack route files must export their Route registration, whose HMR is handled by the router plugin, see: https://github.com/ArnaudBarre/eslint-plugin-react-refresh/releases/tag/v0.5.0
+      "react-refresh/only-export-components": ["error", { extraHOCs: ["createFileRoute", "createRootRoute"] }]
     }
   }
 ]);
