@@ -31,9 +31,11 @@ src/
 - **ESLint owns quality**: unicorn (recommended, `prevent-abbreviations` with an allowList), import-x (registered under the `import` namespace), react-hooks, react-refresh. `eslint-config-prettier` last.
 - **Hooks**: commitlint (conventional commits) on commit-msg; `lint-staged --quiet` on pre-commit (`--quiet` so failures print only the actual errors).
 
-## Theming
+## Componentry & theming
 
-Deferred. The component library decision comes first — theming will be built with it, not before. The zustand theme lib (from `nednella/sanity`, sets `data-theme` on `<html>`) is parked in `git stash` ("theme lib - deferred until component library"). Don't add theme CSS, toggles, or providers until that decision is made.
+- **daisyUI 5** is the component library — class-based components (`btn`, `card`, `badge`, …), configured via `@plugin "daisyui"` in `src/main.css`. Its official Claude skill lives at `.claude/skills/daisyui/SKILL.md` (vendored from daisyui.com/llms.txt — refresh it when bumping daisyUI).
+- Themes: `light`, `dark`, `synthwave`, plus `system` (resolves to light/dark by OS preference). daisyUI switches on the `data-theme` attribute set by the zustand theme lib in `src/lib/theme/` (from `nednella/sanity`). Adding a theme means updating **both** the daisyUI themes config and the `Theme` union in `src/lib/theme/types.d.ts`; the switcher (`src/components/theme-switcher.tsx`) builds its list from that union.
+- Style with daisyUI semantic colours (`base-100`, `base-content`, `primary`, …), never hardcoded palette classes (`neutral-*`) — those ignore theme switches.
 
 ## Commits
 
