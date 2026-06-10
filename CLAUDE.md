@@ -1,6 +1,6 @@
 # algo-arcade
 
-Interactive algorithm visualisations — a personal learning project. Each page is an **exhibit**: an algorithm you can poke at and watch run. React + TypeScript + Vite, TanStack Router (file-based), Tailwind v4, deployed on Vercel (eventually).
+An arcade of interactive algorithm visualisations. A personal learning project — each page is an **exhibit**. React + TypeScript + Vite, TanStack Router (file-based), Tailwind v4, deployed on Vercel.
 
 ## The one rule that matters
 

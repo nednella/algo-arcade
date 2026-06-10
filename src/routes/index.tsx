@@ -56,10 +56,7 @@ function RouteComponent() {
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">
         <section>
           <h1 className="font-mono text-4xl font-bold tracking-tight">algo·arcade</h1>
-          <p className="mt-3 max-w-xl text-neutral-600">
-            An arcade of interactive algorithm visualisations. Walk up to an exhibit, poke at it, and watch the
-            algorithm think.
-          </p>
+          <p className="mt-3 max-w-xl text-neutral-600">An arcade of interactive algorithm visualisations.</p>
         </section>
         <section className="mt-14">
           <h2 className="text-sm font-semibold tracking-widest text-neutral-500 uppercase">Exhibits</h2>
