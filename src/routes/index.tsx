@@ -61,23 +61,23 @@ function RouteComponent() {
         </div>
         <section>
           <h1 className="font-mono text-4xl font-bold tracking-tight">algo·arcade</h1>
-          <p className="mt-3 max-w-xl text-neutral-600">An arcade of interactive algorithm visualisations.</p>
+          <p className="text-base-content/70 mt-3 max-w-xl">An arcade of interactive algorithm visualisations.</p>
         </section>
         <section className="mt-14">
-          <h2 className="text-sm font-semibold tracking-widest text-neutral-500 uppercase">Exhibits</h2>
+          <h2 className="text-base-content/60 text-sm font-semibold tracking-widest uppercase">Exhibits</h2>
           <ul className="mt-4 grid gap-4 sm:grid-cols-2">
             {exhibits.map((exhibit) => (
               <li
                 key={exhibit.slug}
-                className="rounded-lg border border-neutral-200 p-5"
+                className="border-base-300 rounded-lg border p-5"
               >
                 <div className="flex items-center justify-between gap-4">
                   <h3 className="font-medium">{exhibit.title}</h3>
-                  <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium whitespace-nowrap text-neutral-500">
+                  <span className="badge badge-ghost badge-sm whitespace-nowrap">
                     {exhibit.status === "live" ? "live" : "coming soon"}
                   </span>
                 </div>
-                <p className="mt-2 text-sm text-neutral-600">{exhibit.description}</p>
+                <p className="text-base-content/70 mt-2 text-sm">{exhibit.description}</p>
               </li>
             ))}
           </ul>

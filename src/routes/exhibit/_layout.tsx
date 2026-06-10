@@ -10,7 +10,7 @@ function RouteComponent() {
       <nav>
         <Link
           to="/"
-          className="text-sm text-neutral-500 hover:text-neutral-900"
+          className="text-base-content/60 hover:text-base-content text-sm"
         >
           ← algo·arcade
         </Link>
