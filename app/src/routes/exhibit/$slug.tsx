@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { ExhibitPlaceholder } from "@/components/exhibit-placeholder";
+import { NotFound } from "@/components/not-found";
 import { exhibits } from "@/content/exhibits";
 
 export const Route = createFileRoute("/exhibit/$slug")({
@@ -12,7 +13,7 @@ function RouteComponent() {
   const exhibit = exhibits.find((entry) => entry.slug === slug);
 
   if (!exhibit) {
-    return <p className="text-base-content/60 font-mono text-sm">no such exhibit.</p>;
+    return <NotFound />;
   }
 
   return <ExhibitPlaceholder exhibit={exhibit} />;
