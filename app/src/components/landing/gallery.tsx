@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 import { Crosshairs } from "@/components/crosshairs";
 import { type Exhibit, categories, exhibitNumber, exhibits } from "@/content/exhibits";
 
@@ -48,7 +50,11 @@ function ExhibitCard({ exhibit }: { exhibit: Exhibit }) {
       >
         <Crosshairs />
       </span>
-      <span className="block p-6">
+      <Link
+        to="/exhibit/$slug"
+        params={{ slug: exhibit.slug }}
+        className="block p-6"
+      >
         <span className="flex items-start justify-between">
           <span className="font-display text-base-content/40 group-hover:text-primary text-xs transition-colors">
             {exhibitNumber(exhibit)}
@@ -59,7 +65,7 @@ function ExhibitCard({ exhibit }: { exhibit: Exhibit }) {
         </span>
         <span className="mt-5 block font-medium">{exhibit.title}</span>
         <span className="text-base-content/60 mt-2 block text-[13px] leading-relaxed">{exhibit.blurb}</span>
-      </span>
+      </Link>
     </li>
   );
 }

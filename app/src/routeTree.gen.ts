@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ExhibitLayoutRouteImport } from './routes/exhibit/_layout'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExhibitSlugRouteImport } from './routes/exhibit/$slug'
 
 const ExhibitLayoutRoute = ExhibitLayoutRouteImport.update({
   id: '/exhibit',
@@ -22,31 +23,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExhibitSlugRoute = ExhibitSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ExhibitLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/exhibit': typeof ExhibitLayoutRoute
+  '/exhibit': typeof ExhibitLayoutRouteWithChildren
+  '/exhibit/$slug': typeof ExhibitSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/exhibit': typeof ExhibitLayoutRoute
+  '/exhibit': typeof ExhibitLayoutRouteWithChildren
+  '/exhibit/$slug': typeof ExhibitSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/exhibit': typeof ExhibitLayoutRoute
+  '/exhibit': typeof ExhibitLayoutRouteWithChildren
+  '/exhibit/$slug': typeof ExhibitSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/exhibit'
+  fullPaths: '/' | '/exhibit' | '/exhibit/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/exhibit'
-  id: '__root__' | '/' | '/exhibit'
+  to: '/' | '/exhibit' | '/exhibit/$slug'
+  id: '__root__' | '/' | '/exhibit' | '/exhibit/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ExhibitLayoutRoute: typeof ExhibitLayoutRoute
+  ExhibitLayoutRoute: typeof ExhibitLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +74,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exhibit/$slug': {
+      id: '/exhibit/$slug'
+      path: '/$slug'
+      fullPath: '/exhibit/$slug'
+      preLoaderRoute: typeof ExhibitSlugRouteImport
+      parentRoute: typeof ExhibitLayoutRoute
+    }
   }
 }
 
+interface ExhibitLayoutRouteChildren {
+  ExhibitSlugRoute: typeof ExhibitSlugRoute
+}
+
+const ExhibitLayoutRouteChildren: ExhibitLayoutRouteChildren = {
+  ExhibitSlugRoute: ExhibitSlugRoute,
+}
+
+const ExhibitLayoutRouteWithChildren = ExhibitLayoutRoute._addFileChildren(
+  ExhibitLayoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ExhibitLayoutRoute: ExhibitLayoutRoute,
+  ExhibitLayoutRoute: ExhibitLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
