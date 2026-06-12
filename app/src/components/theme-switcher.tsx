@@ -63,7 +63,9 @@ export function ThemeSwitcher() {
           <li key={theme}>
             <button
               type="button"
-              className={theme === activeTheme ? "menu-active" : ""}
+              className={
+                theme === activeTheme ? "bg-base-content text-base-100 hover:bg-base-content" : "hover:bg-base-300"
+              }
               aria-current={theme === activeTheme ? "true" : undefined}
               onClick={() => {
                 setTheme(theme);
