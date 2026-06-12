@@ -11,7 +11,7 @@ export const Route = createRootRoute({
   component: () => (
     <>
       <HeadContent />
-      <div className="mx-auto flex min-h-svh w-full max-w-5xl flex-col px-6">
+      <div className="flex min-h-svh w-full flex-col">
         <SiteHeader />
         <Outlet />
       </div>

@@ -1,13 +1,15 @@
+import { Container } from "@/components/container";
 import { Crosshairs } from "@/components/crosshairs";
 
 export function LandingHero() {
   return (
     <section className="border-base-300 relative flex min-h-[calc(100svh_-_var(--spacing-header))] flex-col justify-center overflow-hidden border-b">
-      <div className="absolute inset-0">
-        <div className="bg-dotgrid mask-fade-b h-full w-full" />
-      </div>
-      <div className="relative py-16 sm:py-24">
-        <div className="border-base-300 bg-base-100 relative mx-auto max-w-2xl border p-10 text-center sm:p-14">
+      <div
+        aria-hidden="true"
+        className="bg-dotgrid mask-fade-b absolute inset-0"
+      />
+      <Container className="relative py-16 sm:py-24">
+        <div className="border-base-300 bg-base-100/70 relative mx-auto max-w-2xl border p-10 text-center backdrop-blur-sm sm:p-14">
           <span
             aria-hidden="true"
             className="text-base-content/40"
@@ -48,7 +50,7 @@ export function LandingHero() {
             </a>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
