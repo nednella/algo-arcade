@@ -25,7 +25,6 @@
     dark --prefersdark;
 }
 
-/* blueprint light — sharp corners, hairline borders, one restrained accent */
 @plugin "daisyui/theme" {
   name: "light";
 
@@ -46,7 +45,6 @@
   --noise: 0;
 }
 
-/* blueprint dark — the same skeleton on a near-black base */
 @plugin "daisyui/theme" {
   name: "dark";
 
@@ -67,7 +65,6 @@
   --noise: 0;
 }
 
-/* terminal — phosphor green on near-black */
 @plugin "daisyui/theme" {
   name: "terminal";
   color-scheme: dark;
@@ -103,7 +100,6 @@
   --noise: 0;
 }
 
-/* arcade — miami: hot pink, cyan and sunset yellow on deep purple */
 @plugin "daisyui/theme" {
   name: "arcade";
   color-scheme: dark;
@@ -139,13 +135,11 @@
   --noise: 0;
 }
 
-/* faint dot-matrix background, tinted with the theme's primary colour */
 @utility bg-dotgrid {
   background-image: radial-gradient(color-mix(in oklab, var(--color-primary) 30%, transparent) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* vertical fade for decorative layers */
 @utility mask-fade-b {
   mask-image: linear-gradient(to bottom, black 55%, transparent);
 }

@@ -8,7 +8,6 @@ export interface Category {
 }
 
 export interface Exhibit {
-  /** route segment: /exhibit/<slug> */
   slug: string;
   title: string;
   blurb: string;
@@ -68,7 +67,6 @@ export const exhibits: Exhibit[] = [
   }
 ];
 
-/** zero-padded display number (001, 002, …), derived from registry order */
 export function exhibitNumber(exhibit: Exhibit): string {
   return String(exhibits.indexOf(exhibit) + 1).padStart(3, "0");
 }
