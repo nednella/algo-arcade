@@ -16,10 +16,11 @@ algorithms/          # @algo-arcade/algorithms — pure TypeScript, no React imp
 app/                 # @algo-arcade/app — the Vite/React app and ALL its config (vite, tsconfigs, index.html, vercel.json)
 └── src/
     ├── app/         # app.tsx (entry component), providers.tsx (renders all providers), router.ts
-    ├── components/  # shared pieces (site-header, theme-switcher, crosshairs, not-found, exhibit-placeholder) + landing/ (per-page pieces)
+    ├── components/  # shared pieces (site-header, theme-switcher, crosshairs, container, not-found, exhibit-placeholder) + landing/ (per-page pieces)
     ├── content/     # exhibits.ts — typed registry of categories + exhibits driving the landing page
+    ├── lib/         # seo.ts (per-route meta), utils.ts (cn helper), theme/ (zustand theme lib)
     ├── routes/      # file-based routes; routeToken is "_layout"
-    │   ├── __root.tsx   # root layout: centred max-w column, site header, outlet (+ devtools)
+    │   ├── __root.tsx   # root layout: full-width column, site header, outlet (+ devtools)
     │   ├── index.tsx    # landing page (thin — composes components/landing/*)
     │   └── exhibit/     # _layout.tsx wraps the dir; $slug.tsx renders registry placeholders until a real page exists
     └── main.tsx     # entry point (main.css is the css entry)
@@ -30,7 +31,7 @@ app/                 # @algo-arcade/app — the Vite/React app and ALL its confi
 
 - **Route files follow TanStack's standard pattern**: `export const Route = createFileRoute(...)` with the component declared as a function below, passed by name (`component: RouteComponent`). The root route may inline its component. Route files stay **thin** — the component composes imported pieces (page chrome, the algorithm component); page innards don't live in `routes/`.
 - `react-refresh/only-export-components` is configured for route files with `extraHOCs: ["createFileRoute", "createRootRoute"]` so the Route export passes on the current plugin version. Caveat from the plugin author (v0.5.0 release notes): route-file HMR degrades once route options gain non-component props (loaders, search validation) — if a route grows those, move its component to its own file.
-- **Shared chrome is minimal**: the root layout owns the centred column and the site header (`components/site-header.tsx`). All other page chrome is written per page; the only nested layout file is `exhibit/_layout.tsx`.
+- **Shared chrome is minimal**: the root layout is a full-width column with the site header (`components/site-header.tsx`). All other page chrome is written per page; the only nested layout file is `exhibit/_layout.tsx`.
 - **Named exports only** (`import/no-default-export`), except `*.config.ts` where tools require default exports.
 - Imports use the `@/` alias (app-internal) or `@algo-arcade/algorithms/<name>` (cross-package). Files are kebab-case.
 
@@ -48,6 +49,9 @@ app/                 # @algo-arcade/app — the Vite/React app and ALL its confi
 - **Radius comes from the theme (always 0)** — never add `rounded-*` classes.
 - Fonts: `font-sans` Geist (body), `font-mono` Geist Mono (kickers, badges, metadata), `font-display` Silkscreen — **wordmark and numerals only, never body text**.
 - Recurring details: hairlines are `border-base-300`; dim text is `text-base-content/<40-70>`; metadata is small `font-mono` with wide tracking. Custom utilities in `main.css`: `bg-dotgrid`, `mask-fade-b`, `animate-blink`; `<Crosshairs>` renders `+` corner markers in `currentColor`.
+- **Layout**: pages are full-bleed `<section>`s; wrap their content in `<Container>` (`components/container.tsx`) to constrain it to the column (`max-w-6xl`) — backgrounds and borders span the viewport, content stays centred. Header height is the `--spacing-header` token (`main.css`); the landing hero fills `calc(100svh - var(--spacing-header))`.
+- **Class names**: compose conditional or merged classes with `cn()` (clsx + tailwind-merge) from `@/lib/utils`, never template-literal concatenation.
+- **SEO/head**: per-route title + meta via TanStack `head()` with `<HeadContent />` in `__root`, built through the `seo()` helper (`@/lib/seo`); `index.html` stays minimal (charset, viewport, favicon).
 
 ## Commits
 
@@ -69,6 +73,7 @@ app/                 # @algo-arcade/app — the Vite/React app and ALL its confi
 ## Conventions
 
 - British English in prose, commits, comments, and identifiers.
+- **Component props**: declare a named `interface <Component>Props` outside the component and destructure it in the signature — never inline object types (they get messy as props grow).
 - Bulletproof React is the style reference for structure and config — but don't copy blindly; parts of it don't apply here.
 - Ask before acting on anything with a decision in it. Plan first, get approval, then execute.
 - **SonarLint runs in the editor — write code that passes it.** Known traps: no `role="button"` on divs (use real semantics like `details`/`summary`), no ambiguous JSX spacing across line breaks (use explicit `{"…"}` strings).
