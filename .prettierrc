@@ -8,7 +8,7 @@
   "jsxSingleQuote": false,
   "trailingComma": "none",
   "printWidth": 120,
-  "importOrder": ["^react", "<THIRD_PARTY_MODULES>", "@/(.*)$", "^[./]"],
+  "importOrder": ["^react", "<THIRD_PARTY_MODULES>", "^@algo-arcade/(.*)$", "@/(.*)$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
