@@ -8,7 +8,7 @@ export const Route = createFileRoute("/exhibit")({
 
 function RouteComponent() {
   return (
-    <main className="w-full flex-1">
+    <main className="flex w-full flex-1 flex-col justify-center">
       <Container>
         <Outlet />
       </Container>
