@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export function SiteHeader() {
   return (
-    <header className="border-base-300 flex items-center justify-between gap-4 border-b py-3">
+    <header className="border-base-300 h-header flex items-center justify-between gap-4 border-b">
       <Link
         to="/"
         className="font-display text-sm tracking-wide"
