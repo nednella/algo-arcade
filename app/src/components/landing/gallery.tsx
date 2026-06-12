@@ -43,7 +43,11 @@ export function ExhibitGallery() {
   );
 }
 
-function ExhibitCard({ exhibit }: { exhibit: Exhibit }) {
+interface ExhibitCardProps {
+  exhibit: Exhibit;
+}
+
+function ExhibitCard({ exhibit }: ExhibitCardProps) {
   const live = exhibit.status === "live";
 
   return (

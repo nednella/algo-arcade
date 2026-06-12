@@ -1,10 +1,12 @@
+import type { ReactNode } from "react";
+
 import { ThemeProvider } from "@/lib/theme/theme-provider";
 
-interface Props {
-  children: React.ReactNode;
+interface ProvidersProps {
+  children: ReactNode;
 }
 
-export function Providers({ children }: Readonly<Props>) {
+export function Providers({ children }: ProvidersProps) {
   return (
     <>
       {children}

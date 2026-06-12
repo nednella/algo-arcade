@@ -1,7 +1,11 @@
 import { Crosshairs } from "@/components/crosshairs";
 import { type Exhibit, exhibitNumber } from "@/content/exhibits";
 
-export function ExhibitPlaceholder({ exhibit }: { exhibit: Exhibit }) {
+interface ExhibitPlaceholderProps {
+  exhibit: Exhibit;
+}
+
+export function ExhibitPlaceholder({ exhibit }: ExhibitPlaceholderProps) {
   return (
     <div className="mx-auto max-w-2xl py-10 sm:py-16">
       <p className="font-display text-primary text-sm">{exhibitNumber(exhibit)}</p>
