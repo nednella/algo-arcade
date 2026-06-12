@@ -16,10 +16,12 @@ algorithms/          # @algo-arcade/algorithms — pure TypeScript, no React imp
 app/                 # @algo-arcade/app — the Vite/React app and ALL its config (vite, tsconfigs, index.html, vercel.json)
 └── src/
     ├── app/         # app.tsx (entry component), providers.tsx (renders all providers), router.ts
+    ├── components/  # shared pieces (site-header, theme-switcher, crosshairs, not-found, exhibit-placeholder) + landing/ (per-page pieces)
+    ├── content/     # exhibits.ts — typed registry of categories + exhibits driving the landing page
     ├── routes/      # file-based routes; routeToken is "_layout"
-    │   ├── __root.tsx   # outlet + devtools only
-    │   ├── index.tsx    # landing page (exhibit list lives here as a const for now)
-    │   └── exhibit/     # exhibit pages; exhibit/_layout.tsx wraps everything in the dir
+    │   ├── __root.tsx   # root layout: centred max-w column, site header, outlet (+ devtools)
+    │   ├── index.tsx    # landing page (thin — composes components/landing/*)
+    │   └── exhibit/     # _layout.tsx wraps the dir; $slug.tsx renders registry placeholders until a real page exists
     └── main.tsx     # entry point (main.css is the css entry)
 ```
 
@@ -28,7 +30,7 @@ app/                 # @algo-arcade/app — the Vite/React app and ALL its confi
 
 - **Route files follow TanStack's standard pattern**: `export const Route = createFileRoute(...)` with the component declared as a function below, passed by name (`component: RouteComponent`). The root route may inline its component. Route files stay **thin** — the component composes imported pieces (page chrome, the algorithm component); page innards don't live in `routes/`.
 - `react-refresh/only-export-components` is configured for route files with `extraHOCs: ["createFileRoute", "createRootRoute"]` so the Route export passes on the current plugin version. Caveat from the plugin author (v0.5.0 release notes): route-file HMR degrades once route options gain non-component props (loaders, search validation) — if a route grows those, move its component to its own file.
-- **No shared layout components.** Page chrome is written per page; the only layout file is `exhibit/_layout.tsx`.
+- **Shared chrome is minimal**: the root layout owns the centred column and the site header (`components/site-header.tsx`). All other page chrome is written per page; the only nested layout file is `exhibit/_layout.tsx`.
 - **Named exports only** (`import/no-default-export`), except `*.config.ts` where tools require default exports.
 - Imports use the `@/` alias (app-internal) or `@algo-arcade/algorithms/<name>` (cross-package). Files are kebab-case.
 
@@ -38,11 +40,14 @@ app/                 # @algo-arcade/app — the Vite/React app and ALL its confi
 - **ESLint owns quality**: unicorn (recommended, `prevent-abbreviations` with an allowList), import-x (registered under the `import` namespace), react-hooks, react-refresh. `eslint-config-prettier` last.
 - **Hooks**: commitlint (conventional commits) on commit-msg; `lint-staged --quiet` on pre-commit (`--quiet` so failures print only the actual errors).
 
-## Componentry & theming
+## App
 
 - **daisyUI 5** is the component library — class-based components (`btn`, `card`, `badge`, …), configured via `@plugin "daisyui"` in `app/src/main.css`. Its official Claude skill lives at `.claude/skills/daisyui/SKILL.md` (vendored from daisyui.com/llms.txt — refresh it when bumping daisyUI).
-- Themes: `light`, `dark`, `synthwave`, plus `system` (resolves to light/dark by OS preference). daisyUI switches on the `data-theme` attribute set by the zustand theme lib in `app/src/lib/theme/` (from `nednella/sanity`). Adding a theme means updating **both** the daisyUI themes config and the `Theme` union in `app/src/lib/theme/types.d.ts`; the switcher (`app/src/components/theme-switcher.tsx`) builds its list from that union.
+- Themes: `light`/`dark` (built-ins overridden with blueprint tokens), `terminal` (phosphor green), `arcade` (miami pink/cyan/yellow), plus `system` (resolves to light/dark by OS preference). daisyUI switches on the `data-theme` attribute set by the zustand theme lib in `app/src/lib/theme/` (from `nednella/sanity`). Adding a theme means updating the daisyUI config in `main.css`, the `Theme` union in `app/src/lib/theme/types.d.ts`, and the list in `app/src/components/theme-switcher.tsx`.
 - Style with daisyUI semantic colours (`base-100`, `base-content`, `primary`, …), never hardcoded palette classes (`neutral-*`) — those ignore theme switches.
+- **Radius comes from the theme (always 0)** — never add `rounded-*` classes.
+- Fonts: `font-sans` Geist (body), `font-mono` Geist Mono (kickers, badges, metadata), `font-display` Silkscreen — **wordmark and numerals only, never body text**.
+- Recurring details: hairlines are `border-base-300`; dim text is `text-base-content/<40-70>`; metadata is small `font-mono` with wide tracking. Custom utilities in `main.css`: `bg-dotgrid`, `mask-fade-b`, `animate-blink`; `<Crosshairs>` renders `+` corner markers in `currentColor`.
 
 ## Commits
 
@@ -66,4 +71,5 @@ app/                 # @algo-arcade/app — the Vite/React app and ALL its confi
 - British English in prose, commits, comments, and identifiers.
 - `nednella/sanity` (`apps/web`) is the style reference for structure and config — but don't copy blindly; parts of it (shadcn token CSS, for example) don't apply here.
 - Ask before acting on anything with a decision in it. Plan first, get approval, then execute.
+- **SonarLint runs in the editor — write code that passes it.** Known traps: no `role="button"` on divs (use real semantics like `details`/`summary`), no ambiguous JSX spacing across line breaks (use explicit `{"…"}` strings).
 - **Visual/design decisions need rendered proposals, not descriptions** — build throwaway HTML mockups in `mockups/` (untracked via its own `.gitignore`, never committed) or link real reference sites, then ask for a verdict.
