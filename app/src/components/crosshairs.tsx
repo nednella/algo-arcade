@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 const corners = [
   "top-0 left-0 -translate-x-1/2 -translate-y-1/2",
   "top-0 right-0 translate-x-1/2 -translate-y-1/2",
@@ -16,7 +18,7 @@ export function Crosshairs() {
         <span
           key={corner}
           aria-hidden="true"
-          className={`pointer-events-none absolute size-3 ${corner} ${bars}`}
+          className={cn("pointer-events-none absolute size-3", corner, bars)}
         />
       ))}
     </>
