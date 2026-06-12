@@ -10,6 +10,8 @@
   /* pixel display font — wordmark and exhibit numerals only, never body text */
   --font-display: "Silkscreen", "Geist Mono Variable", monospace;
 
+  --spacing-header: 3.5rem;
+
   --animate-blink: blink 1.1s steps(1) infinite;
 
   @keyframes blink {

@@ -2,7 +2,7 @@ import { Crosshairs } from "@/components/crosshairs";
 
 export function LandingHero() {
   return (
-    <section className="border-base-300 relative overflow-hidden border-b">
+    <section className="border-base-300 relative flex min-h-[calc(100svh_-_var(--spacing-header))] flex-col justify-center overflow-hidden border-b">
       <div className="absolute inset-0">
         <div className="bg-dotgrid mask-fade-b h-full w-full" />
       </div>
