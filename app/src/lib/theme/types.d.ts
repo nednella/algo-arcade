@@ -1,4 +1,4 @@
 /**
  * Add custom themes here as required.
  */
-export type Theme = "light" | "dark" | "system" | "synthwave";
+export type Theme = "light" | "dark" | "system" | "terminal" | "arcade";

@@ -37,7 +37,9 @@ export default defineConfig([
             Env: true,
             env: true,
             Utils: true,
-            utils: true
+            utils: true,
+            Ref: true,
+            ref: true
           }
         }
       ],
