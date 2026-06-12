@@ -40,7 +40,7 @@ export function ThemeSwitcher() {
       className="dropdown dropdown-end"
     >
       <summary
-        className="btn btn-ghost btn-sm"
+        className="btn btn-ghost btn-sm border-base-300 border"
         aria-label={`Theme: ${activeTheme}`}
       >
         {activeTheme}
