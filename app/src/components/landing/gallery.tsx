@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Container } from "@/components/container";
 import { Crosshairs } from "@/components/crosshairs";
 import { type Exhibit, categories, exhibitNumber, exhibits } from "@/content/exhibits";
+import { cn } from "@/lib/utils";
 
 export function ExhibitGallery() {
   return (
@@ -62,7 +63,7 @@ function ExhibitCard({ exhibit }: { exhibit: Exhibit }) {
           <span className="font-display text-base-content/40 group-hover:text-primary text-xs transition-colors">
             {exhibitNumber(exhibit)}
           </span>
-          <span className={`font-mono text-[10px] tracking-[0.2em] ${live ? "text-primary" : "text-warning"}`}>
+          <span className={cn("font-mono text-[10px] tracking-[0.2em]", live ? "text-primary" : "text-warning")}>
             {live ? "▶ PLAY" : "● SOON"}
           </span>
         </span>
