@@ -1,17 +1,47 @@
+import { useEffect, useRef } from "react";
+
 import { useThemeStore } from "@/lib/theme/theme.store";
 import type { Theme } from "@/lib/theme/types";
 
-const themes: Theme[] = ["system", "light", "dark", "synthwave"];
+const themes: Theme[] = ["system", "light", "dark", "terminal", "arcade"];
 
 export function ThemeSwitcher() {
   const { theme: activeTheme, setTheme } = useThemeStore();
+  const dropdownRef = useRef<HTMLDetailsElement>(null);
+
+  // details-based daisyUI dropdowns don't close on outside interaction by themselves
+  useEffect(() => {
+    function closeOnOutsidePointer(event: PointerEvent) {
+      const dropdown = dropdownRef.current;
+      if (dropdown?.open && event.target instanceof Node && !dropdown.contains(event.target)) {
+        dropdown.open = false;
+      }
+    }
+
+    function closeOnEscape(event: KeyboardEvent) {
+      const dropdown = dropdownRef.current;
+      if (event.key === "Escape" && dropdown?.open) {
+        dropdown.open = false;
+        dropdown.querySelector("summary")?.focus();
+      }
+    }
+
+    document.addEventListener("pointerdown", closeOnOutsidePointer);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsidePointer);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, []);
 
   return (
-    <div className="dropdown dropdown-end">
-      <div
-        tabIndex={0}
-        role="button"
+    <details
+      ref={dropdownRef}
+      className="dropdown dropdown-end"
+    >
+      <summary
         className="btn btn-ghost btn-sm"
+        aria-label={`Theme: ${activeTheme}`}
       >
         {activeTheme}
         <svg
@@ -27,19 +57,19 @@ export function ThemeSwitcher() {
         >
           <path d="m6 9 6 6 6-6" />
         </svg>
-      </div>
-      <ul
-        tabIndex={0}
-        className="dropdown-content menu bg-base-200 rounded-box z-10 mt-1 w-36 p-2 shadow-sm"
-      >
+      </summary>
+      <ul className="dropdown-content menu bg-base-200 border-base-300 z-10 mt-1 w-36 border p-2 shadow-sm">
         {themes.map((theme) => (
           <li key={theme}>
             <button
               type="button"
               className={theme === activeTheme ? "menu-active" : ""}
-              onClick={(event) => {
+              aria-current={theme === activeTheme ? "true" : undefined}
+              onClick={() => {
                 setTheme(theme);
-                event.currentTarget.blur(); // daisyUI dropdowns are focus-based; blurring closes the menu on selection
+                if (dropdownRef.current) {
+                  dropdownRef.current.open = false;
+                }
               }}
             >
               {theme}
@@ -47,6 +77,6 @@ export function ThemeSwitcher() {
           </li>
         ))}
       </ul>
-    </div>
+    </details>
   );
 }
