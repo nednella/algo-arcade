@@ -55,7 +55,7 @@ app/                 # @algo-arcade/app — the Vite/React app and ALL its confi
 - **Any change to a `.md` file is its own commit**: `docs: add x.md` or `docs: update x.md` — one file per commit.
 - **Subject line only — no commit body/description.** The message and the code must be self-descriptive at all times, which is why commits stay as atomic as possible (`chore: restructure into pnpm monorepo…` and a single-doc `docs:` commit are the models).
 - **One thing introduced = one commit**, including its integration glue (e.g. `eslint-config-prettier` belongs with the prettier commit).
-- Mistake or rework of a commit on an **unmerged branch** → **amend/squash into that commit** and force-push with lease, never a follow-up fix commit. History must read as if every commit was right first time.
+- Mistake or rework of a commit on an **unmerged branch** → **amend/squash into that commit**, never a follow-up fix commit. History must read as if every commit was right first time.
 - Substantial changes land via **branch + PR** so CI validates them before merge.
 - Check `git diff --cached` before committing.
 
@@ -69,7 +69,6 @@ app/                 # @algo-arcade/app — the Vite/React app and ALL its confi
 ## Conventions
 
 - British English in prose, commits, comments, and identifiers.
-- `nednella/sanity` (`apps/web`) is the style reference for structure and config — but don't copy blindly; parts of it (shadcn token CSS, for example) don't apply here.
+- Bulletproof React is the style reference for structure and config — but don't copy blindly; parts of it don't apply here.
 - Ask before acting on anything with a decision in it. Plan first, get approval, then execute.
 - **SonarLint runs in the editor — write code that passes it.** Known traps: no `role="button"` on divs (use real semantics like `details`/`summary`), no ambiguous JSX spacing across line breaks (use explicit `{"…"}` strings).
-- **Visual/design decisions need rendered proposals, not descriptions** — build throwaway HTML mockups in `mockups/` (untracked via its own `.gitignore`, never committed) or link real reference sites, then ask for a verdict.
