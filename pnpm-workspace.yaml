@@ -1,0 +1,5 @@
+packages:
+  - algorithms
+  - app
+allowBuilds:
+  unrs-resolver: true

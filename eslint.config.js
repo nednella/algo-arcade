@@ -9,7 +9,7 @@ import globals from "globals";
 import ts from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["dist", "src/routeTree.gen.ts"]),
+  globalIgnores(["**/dist", "app/src/routeTree.gen.ts"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
@@ -54,7 +54,7 @@ export default defineConfig([
     }
   },
   {
-    files: ["src/routes/**/*.tsx"],
+    files: ["app/src/routes/**/*.tsx"],
     rules: {
       // TanStack route files must export their Route registration, whose HMR is handled by the router plugin, see: https://github.com/ArnaudBarre/eslint-plugin-react-refresh/releases/tag/v0.5.0
       "react-refresh/only-export-components": ["error", { extraHOCs: ["createFileRoute", "createRootRoute"] }]
