@@ -68,5 +68,5 @@ export const exhibits: Exhibit[] = [
 ];
 
 export function exhibitNumber(exhibit: Exhibit): string {
-  return String(exhibits.indexOf(exhibit) + 1).padStart(3, "0");
+  return String(exhibits.findIndex((entry) => entry.slug === exhibit.slug) + 1).padStart(3, "0");
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import { useThemeStore } from "@/lib/theme/theme.store";
 import type { Theme } from "@/lib/theme/types";
+import { cn } from "@/lib/utils";
 
 const themes: Theme[] = ["system", "light", "dark", "terminal", "arcade"];
 
@@ -63,9 +64,10 @@ export function ThemeSwitcher() {
           <li key={theme}>
             <button
               type="button"
-              className={
-                theme === activeTheme ? "bg-base-content text-base-100 hover:bg-base-content" : "hover:bg-base-300"
-              }
+              className={cn(
+                "hover:bg-base-300",
+                theme === activeTheme && "bg-base-content text-base-100 hover:bg-base-content"
+              )}
               aria-current={theme === activeTheme ? "true" : undefined}
               onClick={() => {
                 setTheme(theme);
